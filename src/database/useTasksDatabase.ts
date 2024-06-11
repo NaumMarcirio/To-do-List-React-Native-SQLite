@@ -44,22 +44,6 @@ export function useTasksDatabase() {
   }
 
   //função para atualizar uma tarefa no banco
-  async function update(data: TasksDatabase) {
-    const statement = await database.prepareAsync(
-      "UPDATE tasks SET name = $name, quantity = $quantity WHERE id = $id"
-    );
-    try {
-      await statement.executeAsync({
-        $id: data.id,
-        $name: data.name,
-        $quantity: data.quantity,
-      });
-    } catch (error) {
-      throw error;
-    } finally {
-      await statement.finalizeAsync();
-    }
-  }
 
   async function remove(id: number) {
     try {
@@ -80,5 +64,5 @@ export function useTasksDatabase() {
     }
   }
 
-  return { create, searchByName, update, remove, show };
+  return { create, searchByName, remove, show };
 }

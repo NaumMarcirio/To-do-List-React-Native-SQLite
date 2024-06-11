@@ -3,8 +3,11 @@ import {
   PressableProps,
   Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import Checkbox from "expo-checkbox";
+import { useState } from "react";
 
 type Props = PressableProps & {
   data: {
@@ -12,34 +15,38 @@ type Props = PressableProps & {
     quantity: number;
   };
   onDelete: () => void;
-  onOpen: () => void;
 };
 
-export function Task({ data, onDelete, onOpen, ...rest }: Props) {
+export function Task({ data, onDelete, ...rest }: Props) {
+  const [isChecked, setChecked] = useState(false);
   return (
-    <Pressable
-      style={{
-        backgroundColor: "#ccc",
-        padding: 24,
-        borderRadius: 5,
-        gap: 12,
-        flexDirection: "row",
-      }}
-      {...rest}
-    >
-      <Text
+    <View>
+      <Pressable
         style={{
-          flex: 1,
+          backgroundColor: "#c6c6c6",
+          padding: 24,
+          borderRadius: 5,
+          gap: 12,
+          flexDirection: "row",
         }}
+        {...rest}
       >
-        {data.quantity} - {data.name}
-      </Text>
-      <TouchableOpacity onPress={onDelete}>
-        <MaterialIcons name="delete" size={24} color="red" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={onOpen}>
-        <MaterialIcons name="visibility" size={24} color="blue" />
-      </TouchableOpacity>
-    </Pressable>
+        <Checkbox
+          value={isChecked}
+          onValueChange={setChecked}
+          color={isChecked ? "#4630EB" : undefined}
+        />
+        <Text
+          style={{
+            flex: 1,
+          }}
+        >
+          {data.quantity} - {data.name}
+        </Text>
+        <TouchableOpacity onPress={onDelete}>
+          <MaterialIcons name="delete" size={24} color="#b00000" />
+        </TouchableOpacity>
+      </Pressable>
+    </View>
   );
 }
